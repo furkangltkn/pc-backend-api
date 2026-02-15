@@ -5,10 +5,10 @@ public class TelemetryData
     public string? DeviceId{ get; set; }
     public DateTime TimeStamp { get; set; } =  DateTime.Now;
     
-    public TemperatureData Temperature{ get; set; }
-    public CurrentData Current { get; set; }
-    public VoltageData Voltage { get; set; }
-    public MotionData Motion { get; set; }
+    public TemperatureData? Temperature{ get; set; }
+    public CurrentData? Current { get; set; }
+    public VoltageData? Voltage { get; set; }
+    public MotionData? Motion { get; set; }
 }
 
 public class TemperatureData

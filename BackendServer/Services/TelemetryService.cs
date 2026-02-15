@@ -46,10 +46,6 @@ public class TelemetryService
             var telemetry = new TelemetryData
             {
                 DeviceId = deviceId,
-                Temperature = new TemperatureData(),
-                Current = new CurrentData(),
-                Voltage = new VoltageData(),
-                Motion = new MotionData()
             };
 
             var fields = payload.Split(',');
@@ -68,39 +64,102 @@ public class TelemetryService
                 switch (key)
                 {
                     // Temperature
-                    case "BT1": telemetry.Temperature.BT1 = value; break;
-                    case "BT2": telemetry.Temperature.BT2 = value; break;
-                    case "BT3": telemetry.Temperature.BT3 = value; break;
+                    case "BT1":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT1 = value; 
+                        break;
+                    case "BT2": 
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT2 = value; 
+                        break;
+                    case "BT3": 
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT3 = value; 
+                        break;
 
                     // Current
-                    case "I1": telemetry.Current.I1 = value; break;
-                    case "I2": telemetry.Current.I2 = value; break;
-                    case "I3": telemetry.Current.I3 = value; break;
+                    case "I1": 
+                        telemetry.Current ??= new CurrentData();
+                        telemetry.Current.I1 = value; 
+                        break;
+                    case "I2": 
+                        telemetry.Current ??= new CurrentData();
+                        telemetry.Current.I2 = value; 
+                        break;
+                    case "I3": 
+                        telemetry.Current ??= new CurrentData();
+                        telemetry.Current.I3 = value; 
+                        break;
 
                     // Voltage
-                    case "V1": telemetry.Voltage.V1 = value; break;
-                    case "V2": telemetry.Voltage.V2 = value; break;
-                    case "V3": telemetry.Voltage.V3 = value; break;
+                    case "V1": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V1 = value; 
+                        break;
+                    case "V2": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V2 = value; 
+                        break;
+                    case "V3": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V3 = value; 
+                        break;
 
                     // Motion Temperature
-                    case "MT1": telemetry.Motion.MT1 = value; break;
-                    case "MT2": telemetry.Motion.MT2 = value; break;
-                    case "MT3": telemetry.Motion.MT3 = value; break;
+                    case "MT1": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.MT1 = value; 
+                        break;
+                    case "MT2": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.MT2 = value; 
+                        break;
+                    case "MT3": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.MT3 = value; 
+                        break;
                     
                     // Motion Speed
-                    case "SX": telemetry.Motion.SX = value; break;
-                    case "SY": telemetry.Motion.SY = value; break;
-                    case "SZ": telemetry.Motion.SZ = value; break;
+                    case "SX": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.SX = value; 
+                        break;
+                    case "SY": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.SY = value; 
+                        break;
+                    case "SZ": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.SZ = value; 
+                        break;
 
                     // Location
-                    case "LX": telemetry.Motion.LX = value; break;
-                    case "LY": telemetry.Motion.LY = value; break;
-                    case "LZ": telemetry.Motion.LZ = value; break;
+                    case "LX": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.LX = value; 
+                        break;
+                    case "LY": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.LY = value; 
+                        break;
+                    case "LZ": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.LZ = value; 
+                        break;
 
                     // Acceleration
-                    case "AX": telemetry.Motion.AX = value; break;
-                    case "AY": telemetry.Motion.AY = value; break;
-                    case "AZ": telemetry.Motion.AZ = value; break;
+                    case "AX": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.AX = value; 
+                        break;
+                    case "AY": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.AY = value; 
+                        break;
+                    case "AZ": 
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.AZ = value; 
+                        break;
                 }
             }
 

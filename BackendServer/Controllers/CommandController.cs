@@ -27,10 +27,18 @@ public class CommandController : ControllerBase
             return BadRequest("Komut boş olamaz.");
         }
 
-        _logger.Info($"HTTP Command alındı: {commandData.Command}");
+        var cmd = commandData.Command.ToUpperInvariant();
 
-        await _commandService.SendCommand(commandData.Command.ToUpper());
-
+        if (!CommandNames.All.Contains(cmd))
+        {
+            _logger.Error($"Bilinmeyen komut: {cmd}");
+            return BadRequest("Bilinmeyen komut");
+        }
+        
+        _logger.Info($"HTTP Command alındı: {cmd}");
+        
+        await _commandService.SendCommand(cmd);
+        
         return Ok(new
         {
             status = "OK",

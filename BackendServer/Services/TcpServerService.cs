@@ -11,6 +11,7 @@ public class TcpServerService
     private StreamWriter? _writer;
     private StreamReader? _reader;
     private Timer? _pingTimer;
+    private DateTime _lastPongTime = DateTime.MinValue;
 
     private readonly TelemetryService _telemetryService;
     private readonly LoggingService _logger;
@@ -35,6 +36,9 @@ public class TcpServerService
         while (true)
         {
             _raspberryClient = await _listener.AcceptTcpClientAsync();
+           
+            _lastPongTime = DateTime.Now;
+            
             _pingTimer = new Timer(async _ =>
             {
                 await SendPing();
@@ -64,6 +68,12 @@ public class TcpServerService
                     break;
                 }
 
+                if (line == "PONG")
+                {
+                    _lastPongTime = DateTime.Now;
+                    continue;
+                }
+                
                 _logger.Info("RX: " + line);
                 await _telemetryService.HandleRawTelemetry(line);
             }
@@ -77,6 +87,7 @@ public class TcpServerService
             _reader?.Close();
             _writer?.Close();
             _raspberryClient?.Close();
+            _pingTimer?.Change(Timeout.Infinite, Timeout.Infinite);
             _pingTimer?.Dispose();
             
             _reader = null;
@@ -106,6 +117,19 @@ public class TcpServerService
     {
         if (_writer == null) return;
 
+        if (!await HasInternet())
+        {
+            _logger.Error("Internet yok -> PING atılmıyor.");
+            return;
+        }
+
+        if (_lastPongTime != DateTime.MinValue && (DateTime.Now - _lastPongTime).TotalSeconds > 3)
+        {
+            _logger.Error("Watchdog timeout! Raspberry cevap vermiyor.");
+            _raspberryClient?.Close();
+            return;
+        }
+        
         try
         {
             await _writer.WriteLineAsync("PING");
@@ -113,6 +137,23 @@ public class TcpServerService
         catch
         {
             _logger.Error("PING gönderilemedi.");
+        }
+    }
+
+    private async Task<bool> HasInternet()
+    {
+        try
+        {
+            using var client = new TcpClient();
+            var task = client.ConnectAsync("8.8.8.8", 53);
+            var timeout = Task.Delay(1000);
+
+            var completed = await Task.WhenAny(task, timeout);
+            return completed == task && client.Connected;
+        }
+        catch
+        {
+            return false;
         }
     }
     

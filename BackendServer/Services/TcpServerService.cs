@@ -87,13 +87,13 @@ public class TcpServerService
             _reader?.Close();
             _writer?.Close();
             _raspberryClient?.Close();
-            _pingTimer?.Change(Timeout.Infinite, Timeout.Infinite);
             _pingTimer?.Dispose();
             
             _reader = null;
             _writer = null;
             _raspberryClient = null;
             _pingTimer = null;
+            _lastPongTime = DateTime.MinValue;
             
             _logger.Info("Bağlantı temizlendi.");
         }
@@ -116,13 +116,7 @@ public class TcpServerService
     private async Task SendPing()
     {
         if (_writer == null) return;
-
-        if (!await HasInternet())
-        {
-            _logger.Error("Internet yok -> PING atılmıyor.");
-            return;
-        }
-
+        
         if (_lastPongTime != DateTime.MinValue && (DateTime.Now - _lastPongTime).TotalSeconds > 3)
         {
             _logger.Error("Watchdog timeout! Raspberry cevap vermiyor.");
@@ -137,23 +131,6 @@ public class TcpServerService
         catch
         {
             _logger.Error("PING gönderilemedi.");
-        }
-    }
-
-    private async Task<bool> HasInternet()
-    {
-        try
-        {
-            using var client = new TcpClient();
-            var task = client.ConnectAsync("8.8.8.8", 53);
-            var timeout = Task.Delay(1000);
-
-            var completed = await Task.WhenAny(task, timeout);
-            return completed == task && client.Connected;
-        }
-        catch
-        {
-            return false;
         }
     }
     

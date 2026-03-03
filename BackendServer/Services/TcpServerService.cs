@@ -12,9 +12,11 @@ public class TcpServerService
     private StreamReader? _reader;
     private Timer? _pingTimer;
     private DateTime _lastPongTime = DateTime.MinValue;
+    private CancellationTokenSource? _heartbeatCts;
 
     private readonly TelemetryService _telemetryService;
     private readonly LoggingService _logger;
+    private readonly SemaphoreSlim _socketSemaphore = new(1, 1);
 
     public TcpServerService(TelemetryService telemetryService, LoggingService logger)
     {
@@ -35,14 +37,20 @@ public class TcpServerService
     {
         while (true)
         {
+            if (_raspberryClient != null)
+            {
+                _logger.Info("Önceki bağlantı kapatılıyor...");
+                _heartbeatCts.Cancel();
+                _raspberryClient.Close();
+            }
+            
             _raspberryClient = await _listener.AcceptTcpClientAsync();
            
             _lastPongTime = DateTime.Now;
             
-            _pingTimer = new Timer(async _ =>
-            {
-                await SendPing();
-            }, null, 0, 1000);
+            _heartbeatCts = new CancellationTokenSource();
+            _ = Task.Run(() => HeartbeatLoop(_heartbeatCts.Token));
+            
             _logger.Info("Raspberry Pi bağlandı.");
 
             var stream = _raspberryClient.GetStream();
@@ -87,7 +95,9 @@ public class TcpServerService
             _reader?.Close();
             _writer?.Close();
             _raspberryClient?.Close();
-            _pingTimer?.Dispose();
+            
+            _heartbeatCts?.Cancel();
+            _heartbeatCts = null;
             
             _reader = null;
             _writer = null;
@@ -108,29 +118,58 @@ public class TcpServerService
         }
 
         var msg = "CMD|" + command;
-        await _writer.WriteLineAsync(msg);
+        
+        await _socketSemaphore.WaitAsync();
+        try
+        {
+            await _writer.WriteLineAsync(msg);
+        }
+        finally
+        {
+            _socketSemaphore.Release();
+        }
 
         _logger.Info("TX: " + msg);
     }
     
-    private async Task SendPing()
+    private async Task HeartbeatLoop(CancellationToken token)
     {
-        if (_writer == null) return;
-        
-        if (_lastPongTime != DateTime.MinValue && (DateTime.Now - _lastPongTime).TotalSeconds > 3)
-        {
-            _logger.Error("Watchdog timeout! Raspberry cevap vermiyor.");
-            _raspberryClient?.Close();
-            return;
-        }
-        
         try
         {
-            await _writer.WriteLineAsync("PING");
+            while (!token.IsCancellationRequested)
+            {
+                if (_writer == null || _raspberryClient == null)
+                    break;
+
+                if (_lastPongTime != DateTime.MinValue && (DateTime.Now - _lastPongTime).TotalSeconds > 3)
+                {
+                    _logger.Error("Watchdog timeout! Raspberry cevap vermiyor.");
+                    _raspberryClient?.Close();
+                    break;
+                }
+
+                try
+                {
+                    await _socketSemaphore.WaitAsync(token);
+                    await _writer.WriteLineAsync("PING");
+                }
+                catch
+                {
+                    _logger.Error("PING gönderilemedi.");
+                    _raspberryClient?.Close();
+                    break;
+                }
+                finally
+                {
+                    _socketSemaphore.Release();
+                }
+                
+                await Task.Delay(500,token);
+            }
         }
-        catch
+        catch (TaskCanceledException)
         {
-            _logger.Error("PING gönderilemedi.");
+            
         }
     }
     

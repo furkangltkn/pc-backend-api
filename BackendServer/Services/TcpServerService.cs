@@ -37,26 +37,19 @@ public class TcpServerService
     {
         while (true)
         {
-            if (_raspberryClient != null)
-            {
-                _logger.Info("Önceki bağlantı kapatılıyor...");
-                _heartbeatCts.Cancel();
-                _raspberryClient.Close();
-            }
-            
             _raspberryClient = await _listener.AcceptTcpClientAsync();
            
             _lastPongTime = DateTime.Now;
             
+            var stream = _raspberryClient.GetStream();
+            _reader = new StreamReader(stream, Encoding.UTF8);
+            _writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
+           
             _heartbeatCts = new CancellationTokenSource();
             _ = Task.Run(() => HeartbeatLoop(_heartbeatCts.Token));
             
             _logger.Info("Raspberry Pi bağlandı.");
-
-            var stream = _raspberryClient.GetStream();
-            _reader = new StreamReader(stream, Encoding.UTF8);
-            _writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
-
+            
             _ = Task.Run(ListenClientLoop);
         }
     }

@@ -9,6 +9,8 @@ public class TelemetryData
     public CurrentData? Current { get; set; }
     public VoltageData? Voltage { get; set; }
     public MotionData? Motion { get; set; }
+    public PressureData? Pressure { get; set; }
+    public PowerData? Power { get; set; }
 }
 
 public class TemperatureData
@@ -58,4 +60,14 @@ public class MotionData
     public double AZ { get; set; }
     
 }
-    
+
+public class PressureData
+{
+    public double P1 { get; set; } // Kapsül fren basıncı verisi
+}
+
+public class PowerData
+{
+    public double PW1 { get; set; } // Güc tüketimi verileri
+    public double Pw2 { get; set; }
+}

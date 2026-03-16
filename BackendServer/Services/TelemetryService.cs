@@ -160,6 +160,19 @@ public class TelemetryService
                         telemetry.Motion ??= new MotionData();
                         telemetry.Motion.AZ = value; 
                         break;
+                    
+                    // Pressure
+                    case "P1":
+                        telemetry.Pressure ??= new PressureData();
+                        telemetry.Pressure.P1  = value;
+                        break;
+                    
+                    // Power
+                    case "PW1":
+                        telemetry.Power ??= new PowerData();
+                        telemetry.Power.PW1 = value;
+                        break;
+                        
                 }
             }
 

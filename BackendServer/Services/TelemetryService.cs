@@ -76,6 +76,74 @@ public class TelemetryService
                         telemetry.Temperature ??= new TemperatureData();
                         telemetry.Temperature.BT3 = value; 
                         break;
+                    case "BT4":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT4 = value;
+                        break;
+                    case "BT5":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT5 = value;
+                        break;
+                    case "BT6":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT6 = value;
+                        break;
+                    case "BT7":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT7 = value;
+                        break;
+                    case "BT8":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT8 = value;
+                        break;
+                    case "BT9":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT9 = value;
+                        break;
+                    case "BT10":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT10 = value;
+                        break;
+                    case "BT11":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT11 = value;
+                        break;
+                    case "BT12":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT12 = value;
+                        break;
+                    case "BT13":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT13 = value;
+                        break;
+                    case "BT14":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT14 = value;
+                        break;
+                    case "BT15":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT15 = value;
+                        break;
+                    case "BT16":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT16 = value;
+                        break;
+                    case "BT17":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT17 = value;
+                        break;
+                    case "BT18":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT18 = value;
+                        break;
+                    case "BT19":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT19 = value;
+                        break;
+                    case "BT20":
+                        telemetry.Temperature ??= new TemperatureData();
+                        telemetry.Temperature.BT20 = value;
+                        break;
 
                     // Current
                     case "I1": 
@@ -103,6 +171,106 @@ public class TelemetryService
                     case "V3": 
                         telemetry.Voltage ??= new VoltageData();
                         telemetry.Voltage.V3 = value; 
+                        break;
+                    case "V4":
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V4 = value;
+                        break;
+                    case "V5":
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V5 = value;
+                        break;
+                    case "V6": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V6 = value; 
+                        break;
+                    case "V7": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V7 = value; 
+                        break;
+                    case "V8": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V8 = value; 
+                        break;
+                    case "V9": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V9 = value; 
+                        break;
+                    case "V10": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V10 = value; 
+                        break;
+                    case "V11": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V11 = value; 
+                        break;
+                    case "V12": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V12 = value; 
+                        break;
+                    case "V13": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V13 = value; 
+                        break;
+                    case "V14": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V14 = value; 
+                        break;
+                    case "V15": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V15 = value; 
+                        break;
+                    case "V16": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V16 = value; 
+                        break;
+                    case "V17": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V17 = value; 
+                        break;
+                    case "V18": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V18 = value; 
+                        break;
+                    case "V19": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V19 = value; 
+                        break;
+                    case "V20": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V20 = value; 
+                        break;
+                    case "V21": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V21 = value; 
+                        break;
+                    case "V22": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V22 = value; 
+                        break;
+                    case "V23": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V23 = value; 
+                        break;
+                    case "V24": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V24 = value; 
+                        break;
+                    case "V25": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V25 = value; 
+                        break;
+                    case "V26": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V26 = value; 
+                        break;
+                    case "V27": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V27 = value; 
+                        break;
+                    case "V28": 
+                        telemetry.Voltage ??= new VoltageData();
+                        telemetry.Voltage.V28 = value; 
                         break;
 
                     // Motion Temperature
@@ -159,6 +327,36 @@ public class TelemetryService
                     case "AZ": 
                         telemetry.Motion ??= new MotionData();
                         telemetry.Motion.AZ = value; 
+                        break;
+                    
+                    // Roll-Pıtch-Yaw
+                    case "RX":
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.RX = value;
+                        break;
+                    case "PX":
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.PX = value;
+                        break;
+                    case "YX":
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.YX = value;
+                        break;
+                    
+                    // Momentary/Average speed
+                    case "MS":
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.MS = value;
+                        break;
+                    case "AS":
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.AS = value;
+                        break;
+                    
+                    // Reflector counter
+                    case "RC":
+                        telemetry.Motion ??= new MotionData();
+                        telemetry.Motion.RC = value;
                         break;
                     
                     // Pressure

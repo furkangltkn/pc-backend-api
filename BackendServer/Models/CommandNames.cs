@@ -4,6 +4,8 @@ public static class CommandNames
 {
     public const string Forward = "FORWARD";
     public const string Backward = "BACKWARD";
+    public const string FrontBrake = "FRONT_BRAKE";
+    public const string RearBrake = "REAR_BRAKE";
     public const string Brake = "BRAKE";
     public const string Emergency = "EMERGENCY";
     public const string AutonomousOn = "AUTONOMOUS_ON";
@@ -14,6 +16,8 @@ public static class CommandNames
     {
         Forward,
         Backward,
+        FrontBrake,
+        RearBrake,
         Brake,
         Emergency,
         AutonomousOn,
